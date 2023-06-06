@@ -8,6 +8,7 @@ import { ProductComponent } from './component/admin/product/product.component';
 import { IndexComponent } from './component/client/index/index.component';
 import { DashboardComponent } from './component/admin/dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
