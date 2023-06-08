@@ -4,13 +4,13 @@
 <input class="btn btn-success" type="button" value="Thêm mới" data-bs-toggle="modal" data-bs-target="#myModal">
 
 <!-- Create/Update Category Modal-->
-<div class="modal fade" id="myModal">
+<div class="modal fade" id="myModal" (hidden.bs.modal)="resetForm()">
   <form class="modal-dialog" [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
     <div class="modal-content">
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">Thêm mới danh mục</h4>
-        <button type="button" class="btn-close" (click)="resetForm()" data-bs-dismiss="modal" ></button>
+        <button type="button" class="btn-close"  data-bs-dismiss="modal" ></button>
       </div>
 
       <!-- Modal body -->
@@ -23,7 +23,7 @@
 
       <div class="modal-footer">
         <button type="submit"   class="btn btn-primary">Save</button>
-        <button type="button" (click)="resetForm()" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        <button type="button"  class="btn btn-danger" data-bs-dismiss="modal">Close</button>
       </div>
 
     </div>

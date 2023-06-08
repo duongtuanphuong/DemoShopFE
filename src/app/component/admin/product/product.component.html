@@ -1,1 +1,101 @@
 <h4 class="card-title">Product</h4>
+
+<input class="btn btn-success" type="button" value="Thêm mới" data-bs-toggle="modal" data-bs-target="#myModal">
+
+
+<div class="modal fade" id="myModal" >
+    <form class="modal-dialog" [formGroup]="productForm" (ngSubmit)="onSubmit()" >
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Thêm mới danh mục</h4>
+          <button type="button" class="btn-close"  data-bs-dismiss="modal" ></button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="" class="form-label" >Name</label>
+            <input type="text"  class="form-control" formControlName="name" placeholder="Tên danh mục">
+          </div>
+          <div class="mb-3">
+            <label for="" class="form-label" >Description</label>
+            <input type="text"  class="form-control" formControlName="description" placeholder="Mô tả">
+          </div>
+          <div class="mb-3">
+            <label for="" class="form-label" >Price</label>
+            <input type="text"  class="form-control" formControlName="price" placeholder="Giá tiền">
+          </div>
+          <div class="mb-3">
+            <label for="" class="form-label" >Quantity</label>
+            <input type="text"  class="form-control" formControlName="quantity" placeholder="Số lượng">
+          </div>
+          <div class="mb-3">
+            <label for="" class="form-label" >CategoryId</label>
+            <input type="text"  class="form-control" formControlName="categoryId" placeholder="Category = 1">
+          </div>
+          <div class="mb-3">
+            <label for="thumbnail">Thumbnail:</label>
+            <input type="file" id="thumbnail" name="thumbnail" (change)="onFileChange($event)">
+          </div>
+        </div>
+  
+        <div class="modal-footer">
+          <button type="submit"   class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+          <button type="button"  class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+  
+      </div>
+    </form>
+  </div>
+  
+
+
+  <table class="table table-striped">
+    <thead>
+      <tr class="text-center">
+        <th>Id</th>
+        <th>Tên danh mục</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Thumbnail</th>
+        <th>Công cụ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of listProduct;" class="text-center">
+        <td>{{item.id}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.description}}</td>
+        <td>{{item.price}}</td>
+        <td>{{item.quantity}}</td>
+        <td>
+            <img [src]="'http://localhost:8080/uploads/' + item.thumbnail" width="100" alt="">
+        </td>
+        <td>
+          <button type="button" (click)="editCategory(item)"  class="btn btn-info text-light" data-bs-toggle="modal" data-bs-target="#myModal">Edit</button>
+          <button type="button" (click)="getDeleteId(item.id)" data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-danger text-light ms-2">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <div class="modal fade" id="deleteModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Bạn có chắc xóa đối tượng</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" ></button>
+        </div>
+  
+        <div class="modal-footer">
+          <button type="submit" (click)="deleteProduct()"  data-bs-dismiss="modal"  class="btn btn-danger">Delete</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>

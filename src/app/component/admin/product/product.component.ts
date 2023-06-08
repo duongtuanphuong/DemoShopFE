@@ -1,10 +1,116 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ProductService } from 'src/app/_service/product.service';
+import { Product } from 'src/app/class/product';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
-export class ProductComponent {
+export class ProductComponent implements OnInit {
 
+  listProduct : any;
+  selectedFile: File | null = null;
+  productForm !: FormGroup;
+  deleteId !: number;
+  editingProduct :any;
+
+  constructor(private productService:ProductService,public fb: FormBuilder){
+    this.productForm = this.fb.group({
+      name: [''],
+      description: [''],
+      price: [''],
+      quantity: [''],
+      categoryId: [''],
+    });
+  }
+
+  ngOnInit(): void {
+    this.getListProduct();
+  }
+
+  onFileChange(event: any) {
+    if (event.target.files.length > 0) {
+      this.selectedFile = event.target.files[0];
+    }
+  }
+
+
+  getListProduct(){
+    this.productService.getListProduct().subscribe(data=>{
+      this.listProduct = data;
+    })
+  }
+
+
+  // createProduct(){
+  //   const data : Product ={
+  //     name: this.productForm.get('name')?.value,
+  //     description: this.productForm.get('description')?.value,
+  //     price: this.productForm.get('price')?.value,
+  //     quantity: this.productForm.get('quantity')?.value,
+  //     categoryId: this.productForm.get('categoryId')?.value,
+  //   }
+
+  //   if (this.productForm.valid && this.selectedFile){
+  //     this.productService.createProduct(data,this.selectedFile).subscribe({
+  //       next: res=>{
+  //         this.getListProduct;
+  //       }
+  //     })
+  //   }
+  // }
+  
+  onSubmit(){
+    const data : Product ={
+      name: this.productForm.get('name')?.value,
+      description: this.productForm.get('description')?.value,
+      price: this.productForm.get('price')?.value,
+      quantity: this.productForm.get('quantity')?.value,
+      categoryId: this.productForm.get('categoryId')?.value,
+    }
+  
+    if (this.productForm.valid && this.selectedFile){
+      if (this.editingProduct) {
+        this.productService.updateProduct(this.editingProduct.id, data, this.selectedFile).subscribe({
+          next: res=>{
+            this.getListProduct();
+          }
+        })
+      } else {
+        this.productService.createProduct(data,this.selectedFile).subscribe({
+          next: res=>{
+            this.getListProduct();
+          }
+        })
+      }
+    }
+  }
+
+
+  editCategory(data: any){
+    this.editingProduct = data;
+    this.productForm.patchValue({
+      name: data.name,
+      description: data.description,
+      price: data.price,
+      quantity: data.quantity,
+      categoryId: data.category.id
+    })
+    console.log(this.productForm.value);
+  }
+
+  deleteProduct(){
+    this.productService.deleteProduct(this.deleteId).subscribe(data =>{
+      this.getListProduct();
+    })
+  }
+
+
+  getDeleteId(id: any){
+    this.deleteId = id;
+  }
+
+  
 }

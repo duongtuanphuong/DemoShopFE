@@ -12,9 +12,9 @@ declare var window: any;
 })
 export class CategoryComponent implements OnInit {
 
-  listCategory: Category[] = [];
+  listCategory: any;
   categoryForm !: FormGroup;
-  editingCategory: Category | null = null;
+  editingCategory: any;
   modalForm : any;
   deleteId !: number;
 
@@ -50,11 +50,10 @@ export class CategoryComponent implements OnInit {
 
   onSubmit(){
     const data: Category = {
-      id: this.editingCategory ? this.editingCategory.id : null,
       name : this.categoryForm.get('name')!.value
     };
     if(this.editingCategory){
-      this.categoryService.updateCategory(data).subscribe({
+      this.categoryService.updateCategory(this.editingCategory.id,data).subscribe({
         next: res =>{
           console.log("success");
           this.getListCategory();
@@ -76,10 +75,11 @@ export class CategoryComponent implements OnInit {
     this.hideModel();
   }
 
-  editCategory(category: Category) {
-    this.editingCategory = category;
+  editCategory(data: any) {
+    this.editingCategory = data;
+    
     this.categoryForm.patchValue({
-      name: category.name
+      name: data.name
     });
   }
 

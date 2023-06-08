@@ -28,8 +28,8 @@ export class CategoryService {
     return this.http.post<Category>(CATEGORY_API + 'create',JSON.stringify(category),httpOptions);
   }
 
-  updateCategory(category: Category):Observable<Category>{
-    return this.http.put<Category>(CATEGORY_API + 'update/' + category.id,JSON.stringify(category),httpOptions);
+  updateCategory(id: number,category: Category):Observable<Category>{
+    return this.http.put<Category>(CATEGORY_API + 'update/' + id,JSON.stringify(category),httpOptions);
   }
 
   deleteCategory(id: number):Observable<any>{
