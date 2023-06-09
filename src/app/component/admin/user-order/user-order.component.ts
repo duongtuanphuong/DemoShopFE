@@ -19,7 +19,6 @@ export class UserOrderComponent implements OnInit {
   getListOrder(){
     this.orderService.getListOrder().subscribe(data=>{
       this.listOrder = data;
-      console.log(data);
     })
   }
 

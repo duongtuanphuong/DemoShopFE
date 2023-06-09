@@ -112,5 +112,8 @@ export class ProductComponent implements OnInit {
     this.deleteId = id;
   }
 
-  
+  resetForm() {
+    this.editingProduct = null;
+    this.productForm.reset();
+  }
 }
