@@ -9,6 +9,10 @@ import { IndexComponent } from './component/client/index/index.component';
 import { DashboardComponent } from './component/admin/dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CartComponent } from './component/client/cart/cart.component';
+import { OrderComponent } from './component/client/order/order.component';
+import { HomeComponent } from './component/client/home/home.component';
+import { UserOrderComponent } from './component/admin/user-order/user-order.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +20,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     CategoryComponent,
     ProductComponent,
     IndexComponent,
-    DashboardComponent
+    DashboardComponent,
+    CartComponent,
+    OrderComponent,
+    HomeComponent,
+    UserOrderComponent
   ],
   imports: [
     BrowserModule,
