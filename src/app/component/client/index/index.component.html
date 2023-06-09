@@ -109,7 +109,7 @@
           <div class="cart text-end d-none d-lg-block dropdown">
             <button class="border-0 bg-transparent" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
               <span class="fs-6 text-muted dropdown-toggle">Your Cart</span>
-              <h5 class="mb-0"><span class="cart-total">$1290.00</span></h5>
+              <h5 class="mb-0"><span class="cart-total">{{cartService.items.length}} Sản phẩm</span></h5>
             </button>
           </div>
 
@@ -238,13 +238,14 @@
 <div class="container mt-5">
   
  <div class="row">
-    <div class="col-4">
+    <div class="col-4" *ngFor="let item of listProduct">
       <div class="card" style="width: 18rem;">
-        <img src="..." class="card-img-top" alt="...">
+        <img [src]="'http://localhost:8080/uploads/' + item.thumbnail" class="card-img-top" alt="..." style="height: 250px;;">
         <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <h5 class="card-title">{{item.name}}</h5>
+          <p class="card-text">{{item.description}}</p>
+          <p class="card-text">{{item.price | currency:'USD'}}</p>
+          <a href="#" (click)="addToCart(item)" class="btn btn-primary">Add to cart</a>
         </div>
       </div>
     </div>
@@ -261,37 +262,24 @@
       <div class="order-md-last">
         <h4 class="d-flex justify-content-between align-items-center mb-3">
           <span class="text-primary">Your cart</span>
-          <span class="badge bg-primary rounded-pill">3</span>
+          <span class="badge bg-primary rounded-pill">{{cartService.items.length}}</span>
         </h4>
         <ul class="list-group mb-3">
-          <li class="list-group-item d-flex justify-content-between lh-sm">
+          <li class="list-group-item d-flex justify-content-between lh-sm" *ngFor="let item of cartService.items">
             <div>
-              <h6 class="my-0">Growers cider</h6>
-              <small class="text-body-secondary">Brief description</small>
+              <h6 class="my-0">{{item.name}} * {{item.quantity}}</h6>
+              <small class="text-body-secondary">{{item.description}}</small>
             </div>
-            <span class="text-body-secondary">$12</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">Fresh grapes</h6>
-              <small class="text-body-secondary">Brief description</small>
-            </div>
-            <span class="text-body-secondary">$8</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">Heinz tomato ketchup</h6>
-              <small class="text-body-secondary">Brief description</small>
-            </div>
-            <span class="text-body-secondary">$5</span>
+            <span class="text-body-secondary">{{item.price * item.quantity | currency:'USD'}}</span>
+            <button type="button" class="btn-close" (click)="removeFromCart(item)"></button>
           </li>
           <li class="list-group-item d-flex justify-content-between">
             <span>Total (USD)</span>
-            <strong>$20</strong>
+            <strong>{{cartService.totalPrice | currency:'USD'}}</strong>
           </li>
         </ul>
-
-        <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+        <button class="w-100 btn btn-primary btn-lg " type="submit">Thanh toán</button>
+        <button class="w-100 btn btn-primary btn-lg mt-2" data-bs-dismiss="offcanvas" aria-label="Close">Tiếp tục xem</button>
       </div>
     </div>
 </div>
